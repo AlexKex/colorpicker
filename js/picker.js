@@ -1,5 +1,5 @@
 /* Colorpicker by KeX */
-/* v.0.5 */
+/* v.0.7 */
 /* started 11.06.2013 */
 
 function Colorpicker(div_app){
