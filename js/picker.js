@@ -10,16 +10,9 @@ function Colorpicker(div_app){
 Colorpicker.prototype.init = function(){
     var hue; // шкала цвета
     var picker; // выбор оттенков
+    var tones; // выбор тонов
 
     var app_div = this.div;
-
-    var params = {
-        height: 350,
-        width: 50,
-        arrows: "arrows",
-        show_block: "show_block",
-        hue: this.div
-    };
 
     hue = {
         Pos : 0,
@@ -46,7 +39,7 @@ Colorpicker.prototype.init = function(){
                 hue.Pos = tmp_pos;
 
                 show_block.style.backgroundColor = "rgb("+hue2rgb.conv(tmp_pos,100,100)+")";
-                //picker.out_color.style.backgroundColor= "rgb("+hue2rgb.conv(tmp_pos,picker.S,picker.V)+")";
+                picker.show_block.style.backgroundColor= "rgb("+hue2rgb.conv(tmp_pos,picker.S,picker.V)+")";
             }
 
             arrows.onmousedown = function (){
@@ -92,13 +85,100 @@ Colorpicker.prototype.init = function(){
             cont.fillStyle = grad;
             cont.fillRect(0,0,width,height);
         }
-    }
-    hue.init(params);
+    };
+
+    tones = {
+        init: function (elem) {
+
+            var circle, block, colorO, bPstX, bPstY, bWi, bHe, cW, cH, pxY, pxX;
+
+            circle = document.getElementById(elem.marker);
+            block = document.getElementById(elem.show_block);
+            cW = circle.offsetWidth ;
+            cH = circle.offsetHeight;
+            bWi = block.offsetWidth - cW;
+            bHe = block.offsetHeight - cH;
+            pxY = bHe / 100;
+            pxX = bWi / 100;
+
+            tones.cPos = function (e){
+
+                var top, left, S, V;
+
+                document.ondragstart = function() { return false;}
+
+                document.body.onselectstart = function() { return false; }
+
+                left = mouse.pageX(e) - bPstX - cW/2;
+                left = (left < 0)? 0 : left;
+                left = (left > bWi  )? bWi  : left;
+
+                circle.style.left = left  + "px";
+
+                S = Math.ceil(left /pxX) ;
+
+                top = mouse.pageY(e)  - bPstY - cH/2;
+                top = (top > bHe  )? bHe : top;
+
+                top = (top < 0)? 0 : top;
+
+                circle.style.top = top   + "px";
+
+                V = Math.ceil(Math.abs(top / pxY - 100));
+
+                if (V <50) circle.style.borderColor = "#fff";
+
+                else circle.style.borderColor = "#000";
+
+                picker.S = S;
+
+                picker.V = V;
+
+                picker.show_block.style.backgroundColor = "rgb("+hue2rgb.conv(hue.Pos,S,V)+")";
+                var _res = hue2rgb.conv(hue.Pos,S,V);
+                _res = _res[0].toString(16)+""+_res[1].toString(16)+""+_res[2].toString(16);
+                console.log(_res);
+            }
+
+            block.onclick = function(e){tones.cPos(e);}
+            block.onmousedown  = function (){
+                document.onmousemove = function (e){
+                    bPstX = Obj.positX(block);
+                    bPstY = Obj.positY(block);
+                    tones.cPos(e);
+                }
+            }
+
+            document.onmouseup=function() {
+                document.onmousemove = null;
+            }
+        }
+
+    };
 
     picker = {
-        width : 200,
+        Y : 100,
+        X : 100,
+        init: function(){
+            var params = {
+                height: 350,
+                width: 50,
+                arrows: "arrows",
+                show_block: "show_block",
+                hue: app_div
+            };
+            var t_params = {
+                show_block: "picker",
+                marker: "circle"
+            };
 
-    }
+            hue.init(params);
+            tones.init(t_params);
+
+            picker.show_block = document.getElementById("show_block");
+        }
+
+    };
 
     // перегоняем позицию в цвет
     var hue2rgb = {
@@ -126,6 +206,8 @@ Colorpicker.prototype.init = function(){
         }
 
     }
+
+    picker.init();
 }
 
 Colorpicker.prototype.get = function(){
