@@ -1,5 +1,6 @@
 /* Colorpicker by KeX */
-/* v.0.96 */
+/* v.1.0 */
+/* released on 13.06.2013 */
 
 /* minified код для удобной работы с курсором и Drag'n'drop */
 var mouse={pageX:function(b){var a,c,d;d=b||event;return null==d.pageX&&null!=d.clientX?(a=document.body,c=document.documentElement,b=c.scrollLeft||a&&a.scrollLeft||0,b=d.clientX+b-(c.clientLeft||a.clientLeft||0)):d.pageX},pageY:function(b){var a,c,d;d=b||event;return null==d.pageX&&null!=d.clientX?(a=document.body,c=document.documentElement,b=c.scrollTop||a&&a.scrollTop||0,b=d.clientY+b-(c.clientTop||a.clientTop||0)):d.pageY}},Obj={positX:function(b){var a,c;a=0;c=b.getBoundingClientRect();b=document.body;
@@ -35,19 +36,37 @@ Colorpicker.prototype.init = function(div_app){
 
     pick.appendChild(c_marker);
 
+    var color_block = document.createElement("div");
+    color_block.id = "cb";
+
     // div для результирующего цвета
     var s_block = document.createElement("div");
     s_block.id = "show_block";
     s_block.class = "show_block";
 
+    // hex цвета
+    var hex_p = document.createElement("p");
+    hex_p.id = "hex_p";
+    hex_p.style.display = "block";
+    hex_p.innerHTML = "HEX #";
+
+    var hex = document.createElement("input");
+    hex.id = "hex";
+    hex.type = "text";
+
+    color_block.appendChild(s_block);
+    color_block.appendChild(hex_p);
+    color_block.appendChild(hex);
+
     // маска для выбора тонов
     var tones_img = document.createElement("img");
-    tones_img.src = "https://lh3.googleusercontent.com/-8Dm4nhAOssQ/T_IqwyIFXmI/AAAAAAAAACA/4QKmS7s_otE/s256/bgGradient.png";
+    tones_img.src = "js/grad.png";
     tones_img.class = "bk_img";
 
     pick.appendChild(tones_img);
 
-    document.getElementById(app_div).appendChild(s_block);
+    document.getElementById(app_div).appendChild(color_block);
+    document.getElementById(app_div).appendChild(hex);
     document.getElementById(app_div).appendChild(pick);
     
     /* ------------------------- */
@@ -58,8 +77,8 @@ Colorpicker.prototype.init = function(div_app){
         X : 100,
         init: function(){
             var params = {
-                height: 350,
-                width: 50,
+                height: 256,
+                width: 30,
                 show_block: "show_block",
                 tones_block: "picker",
                 hue: app_div
@@ -102,7 +121,15 @@ Colorpicker.prototype.init = function(div_app){
                 hue.Pos = tmp_pos;
 
                 show_block.style.backgroundColor = "rgb("+hue2rgb.conv(tmp_pos,100,100)+")";
-                tones_block.style.backgroundColor= "rgb("+hue2rgb.conv(tmp_pos,picker.X,picker.Y)+")";
+                tones_block.style.backgroundColor= "rgb("+hue2rgb.conv(tmp_pos,100,100)+")";
+
+                mpX = document.getElementById("circle").offsetLeft;
+                mpY = document.getElementById("circle").offsetTop;
+
+                var _res = hue2rgb.conv(hue.Pos,100,100);
+                var hx = hue2rgb.getHex(_res);
+
+                document.getElementById("hex").value = hx;
             }
 
             layer.onclick = function (e){ hue.place(e); };
@@ -206,10 +233,11 @@ Colorpicker.prototype.init = function(div_app){
                 picker.Y = V;
 
                 picker.show_block.style.backgroundColor = "rgb("+hue2rgb.conv(hue.Pos,S,V)+")";
-                //block.style.backgroundColor = "rgb("+hue2rgb.conv(hue.Pos,S,V)+")";
 
                 var _res = hue2rgb.conv(hue.Pos,S,V);
-                _res = _res[0].toString(16)+""+_res[1].toString(16)+""+_res[2].toString(16);
+                var hx = hue2rgb.getHex(_res);
+
+                document.getElementById("hex").value = hx;
             }
 
             block.onclick = function(e){tones.cPos(e);}
@@ -250,7 +278,28 @@ Colorpicker.prototype.init = function(div_app){
                 case 3: R = p; G = q; B = V; break;
                 case 4: R = t; G = p; B = V; break;
                 case 5: R = V; G = p; B = q; break;}
+
             return [parseInt(R*255), parseInt(G*255), parseInt(B*255)];
+        },
+
+        getHex: function(rgb){
+            var hex = '';
+
+            for(var i=0;i<3;i++)
+            {
+                if(!rgb[i] || rgb[i].toString(16).length == 1)
+                {
+                    rgb[i] = rgb[i].toString(16)+""+rgb[i].toString(16);
+                }
+                else
+                {
+                    rgb[i] = rgb[i].toString(16);
+                }
+            }
+
+            hex = rgb[0]+""+rgb[1]+""+rgb[2];
+
+            return hex;
         }
 
     }

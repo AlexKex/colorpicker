@@ -1,8 +1,25 @@
+*
+{
+    font-family: tahoma;
+}
+
+#dstr, #crt
+{
+    background: none repeat scroll 0 0 #59FF72;
+    border: 1px solid green;
+    border-radius: 3px 3px 3px 3px;
+    cursor: pointer;
+    display: block;
+    padding: 3px;
+    width: 87px;
+}
+
 #picker_append
 {
-    background: none repeat scroll 0 0 #CECECE;
-    height: 450px;
-    width: 505px;
+    background: url("../img/noise.jpg") repeat scroll 0 0 #CECECE;
+    border-radius: 10px 10px 10px 10px;
+    height: 288px;
+    width: 445px;
 }
 
 /* colorpicker css */
@@ -11,6 +28,8 @@
     width: 100px;
     height: 100px;
     float: left;
+    margin: 10px;
+    border: 1px solid black
 }
 
 #circle {
@@ -33,11 +52,39 @@
     width: 256px;
     height: 256px;
     float: left;
+    margin: 10px;
 }
 
 .hueline
 {
     cursor: crosshair;
+    float: left;
+    margin-top: 10px;
+}
+
+#hex_p
+{
+    display: block;
+    float: left;
+    left: 10px;
+    position: relative;
+    top: -19px;
+    width: 54px;
+}
+
+#hex
+{
+    display: block;
+    float: left;
+    left: -15px;
+    position: relative;
+    top: 118px;
+    width: 46px;
+}
+
+#cb
+{
+    width: 75px;
     float: left;
 }
 /* ----------------- */
