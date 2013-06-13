@@ -1,27 +1,16 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//RU" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="ru-RU">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Colorpicker</title>
-    <link rel="stylesheet" href="http://blog.devenergy.ru/examples/colorpicker/css/style.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
-    <script type="text/javascript" src="js/mouselib.js"></script>
     <script type="text/javascript" src="js/picker.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
 </head>
 <body>
 <p>Пример colorpicker на JS и jQuery</p>
-<div id="picker_append">
-    <div id="arrows">
-        <div class="left_arrow"></div>
-        <div class="right_arrow"></div>
-    </div>
-</div>
-
-<div id="picker">
-<img src="https://lh3.googleusercontent.com/-8Dm4nhAOssQ/T_IqwyIFXmI/AAAAAAAAACA/4QKmS7s_otE/s256/bgGradient.png" class="bk_img">
-<div class="circle" id="circle"></div>
-</div>
-
-<div id="show_block" class="show_block"></div>
+<p><span onclick="cp_destroy();">Destroy me!</span></p>
+<p><span onclick="cp_create();">Rebuild me!</span></p>
+<div id="picker_append"></div>
 </body>

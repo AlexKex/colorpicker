@@ -1,8 +1,16 @@
+#picker_append
+{
+    background: none repeat scroll 0 0 #CECECE;
+    height: 450px;
+    width: 505px;
+}
+
+/* colorpicker css */
 #show_block
 {
     width: 100px;
     height: 100px;
-    margin-top: 50px;
+    float: left;
 }
 
 #circle {
@@ -19,3 +27,17 @@
     user-select: none;
     -webkit-user-select: none;
 }
+
+#picker
+{
+    width: 256px;
+    height: 256px;
+    float: left;
+}
+
+.hueline
+{
+    cursor: crosshair;
+    float: left;
+}
+/* ----------------- */
