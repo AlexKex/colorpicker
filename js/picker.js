@@ -1,5 +1,5 @@
 /* Colorpicker by KeX */
-/* v.1.0 */
+/* v.1.1 */
 /* released on 13.06.2013 */
 
 /* minified код для удобной работы с курсором и Drag'n'drop */
@@ -44,7 +44,6 @@ Colorpicker.prototype.init = function(div_app){
     s_block.id = "show_block";
     s_block.class = "show_block";
 
-    // hex цвета
     var hex_p = document.createElement("p");
     hex_p.id = "hex_p";
     hex_p.style.display = "block";
@@ -54,9 +53,36 @@ Colorpicker.prototype.init = function(div_app){
     hex.id = "hex";
     hex.type = "text";
 
+    var red = document.createElement("input");
+    red.id = "red";
+    red.type = "text";
+    var green = document.createElement("input");
+    green.id = "green";
+    green.type = "text";
+    var blue = document.createElement("input");
+    blue.id = "blue";
+    blue.type = "text";
+    var r_p = document.createElement("p");
+    r_p.id = "r_p";
+    r_p.innerHTML = "R";
+    var g_p = document.createElement("p");
+    g_p.id = "g_p";
+    g_p.innerHTML = "G";
+    var b_p = document.createElement("p");
+    b_p.id = "b_p";
+    b_p.innerHTML = "B";
+
+    var rgblock = document.createElement("div");
+    rgblock.id="rgb_div";
+
+    rgblock.appendChild(r_p).appendChild(red);
+    rgblock.appendChild(g_p).appendChild(green);
+    rgblock.appendChild(b_p).appendChild(blue);
+
     color_block.appendChild(s_block);
     color_block.appendChild(hex_p);
     color_block.appendChild(hex);
+    color_block.appendChild(rgblock);
 
     // маска для выбора тонов
     var tones_img = document.createElement("img");
@@ -279,6 +305,9 @@ Colorpicker.prototype.init = function(div_app){
                 case 4: R = t; G = p; B = V; break;
                 case 5: R = V; G = p; B = q; break;}
 
+            document.getElementById("red").value = parseInt(R*255);
+            document.getElementById("green").value = parseInt(G*255);
+            document.getElementById("blue").value = parseInt(B*255);
             return [parseInt(R*255), parseInt(G*255), parseInt(B*255)];
         },
 
